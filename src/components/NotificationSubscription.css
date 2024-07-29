@@ -1,0 +1,44 @@
+/* NotificationSubscription.css */
+.notification-subscription {
+    margin: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.flights-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.flights-table th,
+.flights-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.subscribe-button,
+.unsubscribe-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.unsubscribe-button {
+    background-color: #f44336;
+}
+
+.subscribe-button:hover {
+    background-color: #45a049;
+}
+
+.unsubscribe-button:hover {
+    background-color: #e57373;
+}
