@@ -1,4 +1,5 @@
 Flask
 Flask-PyMongo
+Flask-Cors
 pymongo
 pika

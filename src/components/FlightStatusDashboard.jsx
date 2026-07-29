@@ -28,8 +28,8 @@ const FlightStatusDashboard = () => {
                 Departure Time: ${new Date(selectedFlight.departureTime).toLocaleString()}
                 Arrival Time: ${new Date(selectedFlight.arrivalTime).toLocaleString()}
                 Gate: ${selectedFlight.gate}
-                From: ${selectedFlight.from.name} (${selectedFlight.from.iata})
-                To: ${selectedFlight.to.name} (${selectedFlight.to.iata})
+                From: ${selectedFlight.from}
+                To: ${selectedFlight.to}
             `
         };
 
@@ -71,8 +71,8 @@ const FlightStatusDashboard = () => {
                                 <td>{new Date(flight.departureTime).toLocaleString()}</td>
                                 <td>{new Date(flight.arrivalTime).toLocaleString()}</td>
                                 <td>{flight.gate}</td>
-                                <td>{flight.from.name} ({flight.from.iata})</td>
-                                <td>{flight.to.name} ({flight.to.iata})</td>
+                                <td>{flight.from}</td>
+                                <td>{flight.to}</td>
                                 <td>
                                     <button className="primary-btn" onClick={() => { setSelectedFlight(flight); setIsModalOpen(true); }}>
                                         Email Details
