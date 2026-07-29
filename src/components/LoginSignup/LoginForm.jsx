@@ -30,15 +30,16 @@ const LoginForm  = ({ setUser }) => {
         <img
           src="https://www.goindigo.in/content/dam/s6web/in/en/assets/logo/IndiGo_logo_2x.png"
           className="mx-auto md:w-[270px] w-[200px]"
+          alt="IndiGo logo"
         />
         <h1 className=" text-4xl font-semibold md:ms-20  mt-10">Sign In</h1>
 
-        <div class="max-w-sm  md:ms-20  mt-10">
+        <div className="max-w-sm  md:ms-20  mt-10">
         <form onSubmit={handleLogin}>
-            <div class="mb-5">
+            <div className="mb-5">
               <label
-                for="email"
-                class="block mb-2 text-xl font-medium text-gray-900 "
+                htmlFor="email"
+                className="block mb-2 text-xl font-medium text-gray-900 "
               >
                 Your email
               </label>
@@ -47,15 +48,15 @@ const LoginForm  = ({ setUser }) => {
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 id="email"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                 placeholder="name@flowbite.com"
                 required
               />
             </div>
-            <div class="mb-5">
+            <div className="mb-5">
               <label
-                for="password"
-                class="block mb-2 text-xl font-medium text-gray-900 "
+                htmlFor="password"
+                className="block mb-2 text-xl font-medium text-gray-900 "
               >
                 Your password
               </label>
@@ -64,38 +65,37 @@ const LoginForm  = ({ setUser }) => {
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 id="password"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                 required
               />
             </div>
-            <div class="flex items-start mb-5">
-              <div class="flex items-center h-5">
+            <div className="flex items-start mb-5">
+              <div className="flex items-center h-5">
                 <input
                   id="remember"
                   type="checkbox"
                   value=""
-                  class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300   "
-                  required
+                  className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300   "
                 />
               </div>
               <label
-                for="remember"
-                class="ms-2 text-sm font-medium text-gray-900 "
+                htmlFor="remember"
+                className="ms-2 text-sm font-medium text-gray-900 "
               >
                 Remember me
               </label>
             </div>
             <button
               type="submit"
-              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               Submit
             </button>
           </form>
        <span>
-        Not a member? <a href="/signup" class="text-blue-700">Sign up now</a>
+        Not a member? <a href="/signup" className="text-blue-700">Sign up now</a>
        </span>
-         
+
 		</div>
       </div>
     </div>

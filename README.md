@@ -1,70 +1,135 @@
-# Getting Started with Create React App
+# HackHire — Flight Status & Notifications
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A React/Flask app for tracking flight status and managing flight notification subscriptions.
 
-## Available Scripts
+## Overview
 
-In the project directory, you can run:
+Register or log in, then view a live dashboard of flights with their status, gate, and departure/arrival times. Subscribe to notifications for specific flights (delivered via RabbitMQ), and manage notification preferences.
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Registration and login with hashed passwords
+- Flight status dashboard (flight number, status, times, gate, route)
+- Per-flight detail view
+- Notification subscribe/unsubscribe, backed by RabbitMQ
+- Notification preferences management
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Screenshots
 
-### `npm test`
+| Sign In | Sign Up |
+|---|---|
+| ![Sign in page](docs/images/home.png) | ![Sign up page](docs/images/signup.png) |
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+| Flight Status Dashboard |
+|---|
+| ![Dashboard listing two flights with status, gate, and route](docs/images/dashboard.png) |
 
-### `npm run build`
+## Technology Stack
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+**Frontend:** React 18, React Router 6, Tailwind CSS, Axios
+**Backend:** Python, Flask, Flask-PyMongo, Flask-CORS, MongoDB, RabbitMQ (pika)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Local Installation
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Requires Node.js 18+, Python 3.10+, a MongoDB instance, and (for notification subscriptions) a running RabbitMQ instance.
 
-### `npm run eject`
+```bash
+git clone https://github.com/Rockstar100/HackHire.git
+cd HackHire
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Backend
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+cd Backend
+python -m venv venv
+venv\Scripts\activate        # Windows
+# source venv/bin/activate   # macOS/Linux
+pip install -r requirements.txt
+cp .env.example .env         # adjust MONGO_URI if needed
+python app.py
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Frontend
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+npm install
+npm start
+```
 
-## Learn More
+Open [http://localhost:3000](http://localhost:3000), register an account, log in, and view the dashboard.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Environment variables
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+**Backend/.env**
 
-### Code Splitting
+| Variable | Description | Default |
+|---|---|---|
+| `MONGO_URI` | MongoDB connection string | `mongodb://localhost:27017/flight_notifications` |
+| `FLASK_DEBUG` | Enable Flask's debugger (never in production — exposes a remote code execution console) | `false` |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+The frontend's API base URL (`http://127.0.0.1:5000`) is currently hardcoded rather than read from an environment variable.
 
-### Analyzing the Bundle Size
+## Available Commands
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+| Command | Description |
+|---|---|
+| `npm start` | Run the React app in development mode |
+| `npm run build` | Build the React app for production |
+| `python app.py` (Backend, with venv active) | Run the Flask API |
 
-### Making a Progressive Web App
+## Project Structure
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```
+HackHire/
+├── src/
+│   ├── components/
+│   │   ├── LoginSignup/           # LoginForm, SignForm
+│   │   ├── FlightStatusDashboard.jsx
+│   │   ├── FlightDetail.jsx
+│   │   ├── NotificationSubscription.jsx
+│   │   └── NotificationsSettings.jsx
+│   └── App.js                      # routes
+└── Backend/
+    ├── app.py                      # all Flask routes
+    ├── utils.py                    # auth decorator, mock data helper
+    └── requirements.txt
+```
 
-### Advanced Configuration
+## API Reference
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+| Method | Route | Description |
+|---|---|---|
+| `GET` | `/api/flights` | List all flights |
+| `POST` | `/api/signup` | Register (password hashed with werkzeug) |
+| `POST` | `/api/login` | Log in |
+| `GET`/`POST` | `/api/preferences/<user_id>` | Get/update notification preferences |
+| `POST` | `/api/subscribe` | Subscribe to a flight's notifications (publishes to RabbitMQ) |
+| `POST` | `/api/unsubscribe` | Unsubscribe from a flight |
+| `GET` | `/api/subscriptions/<user_id>` | List a user's subscriptions |
 
-### Deployment
+## Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Needs a persistent Python process, MongoDB, and RabbitMQ — not GitHub Pages material for the backend. Recommended: [Render](https://render.com) or [Railway](https://railway.app) for the Flask API + a managed MongoDB (Atlas) and RabbitMQ (CloudAMQP) instance. The React frontend can deploy separately to Vercel, Netlify, or GitHub Pages once its API URL is made configurable.
 
-### `npm run build` fails to minify
+## Known Limitations
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- No session/token-based auth beyond login — there's no JWT or session cookie, so `userId` is passed around client-side rather than derived from a verified credential on each request.
+- The dashboard's "Email Details" button calls `/api/send-email`, which isn't implemented in the backend — clicking it will fail.
+- The frontend's API base URL is hardcoded to `http://127.0.0.1:5000` rather than configurable via environment variable.
+- `/api/subscribe` requires a running RabbitMQ instance; without one, subscribing to a flight will error.
+
+## Future Improvements
+
+- Add proper JWT-based auth instead of passing `userId` around unauthenticated.
+- Implement or remove the `/api/send-email` feature.
+- Make the frontend API base URL configurable.
+
+## License
+
+MIT — see [LICENSE](LICENSE).
+
+## Author
+
+**Parveen Jaiswal**
+GitHub: [@Rockstar100](https://github.com/Rockstar100)

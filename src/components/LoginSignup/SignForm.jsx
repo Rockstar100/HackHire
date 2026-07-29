@@ -23,7 +23,7 @@ const SignForm = () => {
         setEmail('');
         setPassword('');
         setConfirmPassword('');
-        window.location.href = '/login';
+        window.location.href = '/';
       })
       .catch(error => {
         console.error('Error signing up:', error);
@@ -122,7 +122,6 @@ const SignForm = () => {
                   type="checkbox"
                   value=""
                   className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300"
-                  required
                 />
               </div>
               <label

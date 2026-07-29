@@ -1,4 +1,5 @@
 # Updated Flask App (app.py)
+import os
 from flask import Flask, jsonify, request
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
@@ -9,7 +10,7 @@ import json
 from flask_cors import CORS
 
 app = Flask(__name__)
-app.config['MONGO_URI'] = 'mongodb://localhost:27022/hackhire-test'
+app.config['MONGO_URI'] = os.environ.get('MONGO_URI', 'mongodb://localhost:27017/flight_notifications')
 
 # Enable CORS for all routes
 CORS(app, resources={
@@ -153,4 +154,5 @@ def get_subscriptions(user_id):
     return jsonify({'subscriptions': subscription_list})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    debug_mode = os.environ.get('FLASK_DEBUG', 'false').lower() == 'true'
+    app.run(debug=debug_mode)
